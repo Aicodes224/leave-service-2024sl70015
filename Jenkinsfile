@@ -17,6 +17,9 @@ pipeline {
         stage('SonarQube Code Inspection') {
             steps {
                 withCredentials([string(credentialsId: 'sonarqube-token', variable: 'SONAR_TOKEN')]) {
+
+                    sh 'curl -sS -u "$SONAR_TOKEN:" http://localhost:9000/api/authentication/validate'
+
                     sh '''
                         mvn org.sonarsource.scanner.maven:sonar-maven-plugin:4.0.0.4121:sonar \
                         -Dsonar.projectKey=leave-service-2024sl70015 \
